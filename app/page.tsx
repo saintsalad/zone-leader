@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Crown, Trophy, Users, Map, Calendar, Target, Shield, BarChart } from "lucide-react";
-import ClientHeader from "@/components/layout/client-header";
 
 export default function Home() {
   return (
     <>
-      <ClientHeader />
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-white">
         {/* Hero Section - Improved with more Solo Leveling style */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden">
