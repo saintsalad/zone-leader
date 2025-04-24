@@ -1,0 +1,23 @@
+zones - api/zones
+
+name (Quezon City Zone)
+zone_id (quezon-city)
+total_routes (3)
+total_players (102)
+
+
+zone - api/zones/:zone_id
+
+name (Quezon City Zone)
+zone_id (quezon-city)
+description (blah blah)
+banner (image)
+total_routes (3)
+total_players (102)
+routes
+    route_id (up-academic-oval-d)
+    name
+    route_map_details
+    class (d - s)
+    weekly_slots (0/10)
+    route_leader (user_id)

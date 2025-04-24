@@ -30,6 +30,8 @@ export async function middleware(request: NextRequest) {
     } = await supabase.auth.getUser();
     const isAuthenticated = !!user;
 
+    console.log(isAuthenticated, "isAuthenticated");
+
     // Check route types
     const isProtectedRoute = protectedRoutes.some((route) =>
       pathname.startsWith(route)

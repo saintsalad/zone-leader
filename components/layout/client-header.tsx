@@ -48,8 +48,8 @@ function ClientHeader() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              ZONE LEADER
+            <span className="font-bold uppercase text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+              Strivyx
             </span>
           </Link>
 
