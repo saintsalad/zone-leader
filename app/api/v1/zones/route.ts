@@ -18,7 +18,7 @@ export async function GET() {
       );
     }
 
-    return NextResponse.json(zones);
+    return NextResponse.json({ zones });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       counter++;

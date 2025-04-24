@@ -13,10 +13,11 @@ export async function GET(
 
     counter = 0;
 
-    const { data: zones, error } = await supabase
+    const { data: zone, error } = await supabase
       .from("zones")
       .select("*")
-      .eq("zone_id", zoneId);
+      .eq("zone_id", zoneId)
+      .single();
 
     if (error) {
       return NextResponse.json(
@@ -25,11 +26,11 @@ export async function GET(
       );
     }
 
-    if (zones.length === 0) {
+    if (!zone) {
       return NextResponse.json({ error: "Zone not found" }, { status: 404 });
     }
 
-    return NextResponse.json(zones);
+    return NextResponse.json({ zone: zone });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       counter++;

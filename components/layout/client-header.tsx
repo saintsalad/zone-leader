@@ -43,7 +43,7 @@ function ClientHeader() {
   };
 
   return (
-    <header className="fixed w-full z-50 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
+    <header className="fixed max-w-7xl w-full z-50 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

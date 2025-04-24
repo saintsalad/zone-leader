@@ -13,10 +13,11 @@ export async function GET(
 
     counter = 0;
 
-    const { data: routes, error } = await supabase
+    const { data: route, error } = await supabase
       .from("routes")
       .select("*")
-      .eq("route_id", routeId);
+      .eq("route_id", routeId)
+      .single();
 
     if (error) {
       return NextResponse.json(
@@ -25,11 +26,11 @@ export async function GET(
       );
     }
 
-    if (routes.length === 0) {
+    if (!route) {
       return NextResponse.json({ error: "Route not found" }, { status: 404 });
     }
 
-    return NextResponse.json(routes);
+    return NextResponse.json({ route: route });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       counter++;

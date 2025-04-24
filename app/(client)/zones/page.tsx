@@ -2,106 +2,38 @@
 
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Search, MapPin, Users, Timer } from "lucide-react";
 import Link from "next/link";
-
-// Mock data - replace with real data later
-const zones = [
-  {
-    id: 1,
-    city: "Quezon City",
-    slug: "quezon-city",
-    routes: [
-      { distance: "5km", count: 6 },
-      { distance: "10km", count: 4 },
-      { distance: "20km", count: 2 },
-    ],
-    activePlayers: 450,
-    area: "North Metro Manila",
-    totalRoutes: 12,
-  },
-  {
-    id: 2,
-    city: "Makati",
-    slug: "makati",
-    routes: [
-      { distance: "5km", count: 5 },
-      { distance: "10km", count: 3 },
-      { distance: "20km", count: 1 },
-    ],
-    activePlayers: 380,
-    area: "Central Metro Manila",
-    totalRoutes: 9,
-  },
-  {
-    id: 3,
-    city: "Taguig",
-    slug: "taguig",
-    routes: [
-      { distance: "5km", count: 4 },
-      { distance: "10km", count: 3 },
-      { distance: "20km", count: 1 },
-    ],
-    activePlayers: 320,
-    area: "South Metro Manila",
-    totalRoutes: 8,
-  },
-  {
-    id: 4,
-    city: "Manila",
-    slug: "manila",
-    routes: [
-      { distance: "5km", count: 5 },
-      { distance: "10km", count: 2 },
-      { distance: "20km", count: 1 },
-    ],
-    activePlayers: 290,
-    area: "Central Metro Manila",
-    totalRoutes: 8,
-  },
-  {
-    id: 5,
-    city: "Pasig",
-    slug: "pasig",
-    routes: [
-      { distance: "5km", count: 4 },
-      { distance: "10km", count: 3 },
-      { distance: "20km", count: 1 },
-    ],
-    activePlayers: 280,
-    area: "East Metro Manila",
-    totalRoutes: 8,
-  },
-  {
-    id: 6,
-    city: "Marikina",
-    slug: "marikina",
-    routes: [
-      { distance: "5km", count: 3 },
-      { distance: "10km", count: 2 },
-      { distance: "20km", count: 1 },
-    ],
-    activePlayers: 220,
-    area: "East Metro Manila",
-    totalRoutes: 6,
-  },
-];
+import { useZones } from "@/hooks/useZones";
 
 function Zones() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDistance, setSelectedDistance] = useState<string | null>(null);
+  //const [selectedDistance, setSelectedDistance] = useState<string | null>(null);
 
-  const distances = ["5km", "10km", "20km"];
+  // const distances = ["5km", "10km", "20km"];
 
-  const filteredZones = zones.filter((zone) => {
-    const matchesSearch = zone.city
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    return matchesSearch;
-  });
+  // const filteredZones = zones.filter((zone) => {
+  //   const matchesSearch = zone.city
+  //     .toLowerCase()
+  //     .includes(searchQuery.toLowerCase());
+  //   return matchesSearch;
+  // });
+
+  const {
+    data: zones,
+    isLoading: isZonesLoading,
+    isError: isZonesError,
+  } = useZones();
+
+  if (isZonesLoading) {
+    return <div className="pt-16">Loading...</div>;
+  }
+
+  if (isZonesError) {
+    return <div className="pt-16">Error loading zones</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-950 to-blue-900 p-6 pt-20">
@@ -131,7 +63,7 @@ function Zones() {
             />
           </div>
           <div className="flex flex-wrap gap-2 justify-center">
-            {distances.map((distance) => (
+            {/* {distances.map((distance) => (
               <Button
                 key={distance}
                 variant={selectedDistance === distance ? "default" : "outline"}
@@ -149,38 +81,39 @@ function Zones() {
               >
                 {distance}
               </Button>
-            ))}
+            ))} */}
           </div>
         </div>
 
         {/* Zone Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-          {filteredZones.map((zone) => (
-            <Link href={`/zones/${zone.slug}`} key={zone.id}>
-              <Card
-                key={zone.id}
-                className="bg-white/10 border-white/20 hover:bg-white/15 transition-all cursor-pointer group"
-              >
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-white">
-                    <MapPin className="h-5 w-5 text-blue-400" />
-                    {zone.city}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4 text-gray-200">
-                    <div className="flex items-center gap-2">
-                      <Timer className="h-4 w-4 text-blue-400" />
-                      <span>{zone.totalRoutes} routes</span>
+          {zones &&
+            zones.map((zone) => (
+              <Link href={`/zones/${zone.zone_id}`} key={zone.id}>
+                <Card
+                  key={zone.id}
+                  className="bg-white/10 border-white/20 hover:bg-white/15 transition-all cursor-pointer group"
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <MapPin className="h-5 w-5 text-blue-400" />
+                      {zone.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center gap-4 text-gray-200">
+                      <div className="flex items-center gap-2">
+                        <Timer className="h-4 w-4 text-blue-400" />
+                        <span>{zone.total_routes} routes</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Users className="h-4 w-4 text-blue-400" />
+                        <span>{zone.total_players} players</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-blue-400" />
-                      <span>{zone.activePlayers} players</span>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex flex-wrap gap-2">
-                      {zone.routes.map((route) => (
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap gap-2">
+                        {/* {zone.routes.map((route) => (
                         <Badge
                           key={route.distance}
                           variant="secondary"
@@ -188,21 +121,22 @@ function Zones() {
                         >
                           {route.distance} ({route.count})
                         </Badge>
-                      ))}
+                      ))} */}
+                        N/A
+                      </div>
                     </div>
-                  </div>
-                  <div className="pt-2">
-                    <Badge
-                      variant="outline"
-                      className="border-white/20 text-gray-200"
-                    >
-                      {zone.area}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+                    <div className="pt-2">
+                      <Badge
+                        variant="outline"
+                        className="border-white/20 text-gray-200"
+                      >
+                        {/* {zone.area} */} N/A
+                      </Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
         </div>
       </div>
     </div>

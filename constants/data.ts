@@ -51,3 +51,12 @@ export const ROUTE_ID_PATTERN = [
     ],
   },
 ];
+
+const API_BASE_URL = "/api/v1";
+export const API_URL = {
+  ZONES: `${API_BASE_URL}/zones`,
+  ZONE: `${API_BASE_URL}/zones/:zoneId`,
+  ROUTES: `${API_BASE_URL}/zones/:zoneId/routes`,
+  ROUTE: `${API_BASE_URL}/zones/:zoneId/routes/:routeId`,
+  PLAYERS: `${API_BASE_URL}/players`,
+};

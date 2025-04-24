@@ -24,7 +24,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(routes);
+    return NextResponse.json({ routes: routes });
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       return NextResponse.json(
